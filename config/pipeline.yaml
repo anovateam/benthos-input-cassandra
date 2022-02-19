@@ -1,0 +1,18 @@
+http:
+  address: ${HTTP_ADDRESS:0.0.0.0:4195}
+
+input:
+  cassandra:
+    integrations:
+      service_address: ${INTEGRATIONS_SERVICE_ADDRESS}
+    integration_id: ${INTEGRATION_ID}
+    entity_type: ${ENTITY_TYPE}
+    identity:
+      service_address: ${IDENTITY_SERVICE_ADDRESS}
+      client_id: ${IDENTITY_CLIENT_ID:data-api}
+      client_secret: ${IDENTITY_CLIENT_SECRET}
+      scopes:
+        - integrationsconfiguration-api
+    max_in_flight: ${INPUT_MAX_IN_FLIGHT:1}
+
+output:
