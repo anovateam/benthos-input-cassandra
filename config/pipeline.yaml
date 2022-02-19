@@ -4,7 +4,7 @@ http:
 input:
   cassandra:
     addresses:
-    - '${CASSANDRA_ADDRESS:localhost}:${CASSANDRA_PORT:9042}'
+    - ${CASSANDRA_ADDRESS:localhost}:${CASSANDRA_PORT:9042}
     tls:
       enabled: ${CASSANDRA_TLS_ENABLED:true}
       skip_cert_verify: ${CASSANDRA_TLS_SKIP_CERT_VERIFY:true}
