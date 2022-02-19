@@ -1,1 +1,1 @@
-# benthos-cassandra-input
+# benthos-input-cassandra
