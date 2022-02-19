@@ -17,7 +17,7 @@ input:
     keyspace: ${CASSANDRA_KEYSPACE:my_keyspace}
     query: >
       ${CASSANDRA_QUERY:select * from my_table}
-    page_size: 100
+    page_size: ${CASSANDRA_PAGE_SIZE:100}
     timeout: ${CASSANDRA_TIMEOUT:1s}
     max_in_flight: ${CASSANDRA_MAX_IN_FLIGHT:1}
     batching:
