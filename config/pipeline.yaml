@@ -3,16 +3,37 @@ http:
 
 input:
   cassandra:
-    integrations:
-      service_address: ${INTEGRATIONS_SERVICE_ADDRESS}
-    integration_id: ${INTEGRATION_ID}
-    entity_type: ${ENTITY_TYPE}
-    identity:
-      service_address: ${IDENTITY_SERVICE_ADDRESS}
-      client_id: ${IDENTITY_CLIENT_ID:data-api}
-      client_secret: ${IDENTITY_CLIENT_SECRET}
-      scopes:
-        - integrationsconfiguration-api
-    max_in_flight: ${INPUT_MAX_IN_FLIGHT:1}
+    addresses:
+    - '${CASSANDRA_ADDRESS:localhost}:${CASSANDRA_PORT:9042}'
+    tls:
+      enabled: ${CASSANDRA_TLS_ENABLED:true}
+      skip_cert_verify: ${CASSANDRA_TLS_SKIP_CERT_VERIFY:true}
+      enable_renegotiation: ${CASSANDRA_TLS_ENABLE_RENEGOTIATION:true}
+    password_authenticator:
+      enabled: ${CASSANDRA_PASSWORD_AUTHENTICATOR_ENABLED:true}
+      username: ${CASSANDRA_USER}
+      password: ${CASSANDRA_PASSWORD}
+    disable_initial_host_lookup: ${CASSANDRA_DISABLE_INITIAL_HOST_LOOKUP:true}
+    keyspace: ${CASSANDRA_KEYSPACE:my_keyspace}
+    query: >
+      ${CASSANDRA_QUERY:select * from my_table}
+    page_size: 100
+    timeout: ${CASSANDRA_TIMEOUT:1s}
+    max_in_flight: ${CASSANDRA_MAX_IN_FLIGHT:1}
+    batching:
+      count: ${CASSANDRA_OUTPUT_BATCH_COUNT:0}
+      byte_size: ${CASSANDRA_OUTPUT_BATCH_BYTE_SIZE:0}
+      period: ${CASSANDRA_OUTPUT_BATCH_PERIOD:""}
+
+pipeline:
+  processors:
+  - log:
+      level: INFO
+      message: "cassandra row"
+      fields:
+        row: '${! json() }'
 
 output:
+  file:
+    path: "${FILE_OUTPUT_PATH:/tmp/out.jsonl}"
+    codec: lines

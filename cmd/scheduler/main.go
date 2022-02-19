@@ -1,4 +1,4 @@
-// main package for scheduler application
+// main package for importer application
 package main
 
 import (
@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	log.Info().Msg("Starting GDC-integrations scheduler")
+	log.Info().Msg("Starting cassandra importer")
 
 	service.Run()
 }
