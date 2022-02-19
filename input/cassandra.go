@@ -399,7 +399,7 @@ func (c *cassandraInput) ConnectToCassandra(ctx context.Context) error {
 	}
 	cluster.DisableInitialHostLookup = c.conf.DisableInitialHostLookup
 	if cluster.Consistency, err = gocql.ParseConsistencyWrapper(c.conf.Consistency); err != nil {
-		return fmt.Errorf("parsing consistency: %w", err)
+		return fmt.Errorf("parsing consistency: %v", err)
 	}
 
 	cluster.RetryPolicy = &decorator{
@@ -415,7 +415,7 @@ func (c *cassandraInput) ConnectToCassandra(ctx context.Context) error {
 	}
 	session, err := cluster.CreateSession()
 	if err != nil {
-		return fmt.Errorf("creating Cassandra session: %w", err)
+		return fmt.Errorf("creating Cassandra session: %v", err)
 	}
 
 	c.session = session
@@ -451,7 +451,7 @@ func (c *cassandraInput) Connect(ctx context.Context) error {
 			for iter.MapScan(m) {
 				j, err := json.Marshal(m)
 				if err != nil {
-					c.logger.Errorf("creating cassandra session: %w", err)
+					c.logger.Errorf("creating cassandra session: %v", err)
 					return
 				}
 				c.messageChan <- service.NewMessage(j)
